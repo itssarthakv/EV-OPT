@@ -5,6 +5,7 @@ class Graph
 {
 private:
     int vertices;
+    int edges;
 
 public:
     Graph(int vertices);

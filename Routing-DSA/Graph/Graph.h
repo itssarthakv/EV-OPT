@@ -13,6 +13,8 @@ private:
 
 public:
     Graph(int vertices);
+    void addEdge(int source, int destination, int distance);
+    void displayGraph();
 };
 
 #endif

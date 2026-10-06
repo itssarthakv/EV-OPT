@@ -1,5 +1,8 @@
 #include "Graph.h"
 #include <iostream>
+#include <queue>
+#include <climits>
+#include <functional>
 
 Graph::Graph(int vertices)
 {
@@ -28,5 +31,62 @@ void Graph::displayGraph()
         }
 
         std::cout << std::endl;
+    }
+}   // ✅ This closes displayGraph()
+
+
+void Graph::dijkstra(int source)
+{
+    std::vector<int> distance(vertices, INT_MAX);
+
+    std::priority_queue<
+        std::pair<int, int>,
+        std::vector<std::pair<int, int>>,
+        std::greater<std::pair<int, int>>
+    > pq;
+
+    distance[source] = 0;
+    pq.push({0, source});
+
+    while (!pq.empty())
+    {
+        int currentDistance = pq.top().first;
+        int currentVertex = pq.top().second;
+
+        pq.pop();
+
+        if (currentDistance > distance[currentVertex])
+        {
+            continue;
+        }
+
+        for (auto edge : adjacencyList[currentVertex])
+        {
+            int nextVertex = edge.first;
+            int edgeDistance = edge.second;
+
+            int newDistance = currentDistance + edgeDistance;
+
+            if (newDistance < distance[nextVertex])
+            {
+                distance[nextVertex] = newDistance;
+                pq.push({newDistance, nextVertex});
+            }
+        }
+    }
+
+    std::cout << "Shortest distances from vertex "
+              << source << ":" << std::endl;
+
+    for (int i = 0; i < vertices; i++)
+    {
+        if (distance[i] == INT_MAX)
+        {
+            std::cout << i << " -> Unreachable" << std::endl;
+        }
+        else
+        {
+            std::cout << i << " -> " << distance[i] << std::endl;
+        }
     }
 }

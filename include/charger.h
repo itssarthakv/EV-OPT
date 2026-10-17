@@ -1,24 +1,20 @@
-#ifndef CHARGER_H
-#define CHARGER_H
-
+#pragma once
 #include <string>
-using namespace std;
 
-class Charger
-{
+class Charger {
 private:
-    int chargerId;
-    double power;
-    string status;
+    int    chargerId;
+    double power;           
+    double costPerKWh;      
+    std::string status;     
 
 public:
-    Charger(int id, double p);
+    Charger(int id, double p, double cost);
 
-    int getChargerId();
-    double getPower();
-    string getStatus();
+    int         getChargerId()  const;
+    double      getPower()      const;
+    double      getCostPerKWh() const;
+    std::string getStatus()     const;
 
-    void setStatus(string s);
+    void setStatus(const std::string& s);
 };
-
-#endif

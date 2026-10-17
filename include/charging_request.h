@@ -1,35 +1,48 @@
-#ifndef CHARGING_REQUEST_H
-#define CHARGING_REQUEST_H
+#include <string>
 
-class ChargingRequest
-{
+class ChargingRequest {
 private:
     int requestId;
     int evId;
+    int userId;
     int stationId;
 
     double currentSOC;
     double targetSOC;
 
-    int urgency;
-    int waitingTime;
+    int    urgency;       
+    int    waitingTime;    
+    double allocatedPower;  
+    int    assignedChargerId; 
+
+    std::string status;    
+
+    static int nextId;
 
 public:
-    ChargingRequest(int rid, int eid, int sid,
-                    double soc, double target,
-                    int urgent);
+    ChargingRequest(int uid, int eid, int sid,
+                    double soc, double target, int urg);
 
-    int getRequestId();
-    int getEvId();
-    int getStationId();
+    
+    int         getRequestId()      const;
+    int         getEvId()           const;
+    int         getUserId()         const;
+    int         getStationId()      const;
+    double      getCurrentSOC()     const;
+    double      getTargetSOC()      const;
+    int         getUrgency()        const;
+    int         getWaitingTime()    const;
+    double      getAllocatedPower()  const;
+    int         getAssignedChargerId() const;
+    std::string getStatus()         const;
 
-    double getCurrentSOC();
-    double getTargetSOC();
 
-    int getUrgency();
-    int getWaitingTime();
+    double getPriority() const;
 
-    void setWaitingTime(int time);
+  
+    void setWaitingTime(int t);
+    void incrementWaitingTime();
+    void setAllocatedPower(double p);
+    void setAssignedChargerId(int cid);
+    void setStatus(const std::string& s);
 };
-
-#endif

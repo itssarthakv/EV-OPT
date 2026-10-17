@@ -1,35 +1,36 @@
-#ifndef EV_H
-#define EV_H
+#pragma once
+
 
 #include <string>
-using namespace std;
 
-class EV
-{
+class EV {
 private:
     int evId;
-    int userId;
+    int userId;             
 
-    string currentLocation;
-    string destination;
+    double batteryCapacity; 
+    double currentSOC;      
+    double targetSOC;      
+    int    urgency;        
 
-    double batteryCapacity;
-    double currentSOC;
-    double targetSOC;
+    static int nextId;
 
 public:
-    EV(int id, int uid, string location, string dest,
-       double capacity, double soc, double target);
+    
+    EV(int uid, double capacity, double soc, double target, int urg);
 
-    int getEvId();
-    int getUserId();
+    
+    EV(int id, int uid, double capacity, double soc, double target, int urg);
 
-    string getCurrentLocation();
-    string getDestination();
+ 
+    int    getEvId()           const;
+    int    getUserId()         const;
+    double getBatteryCapacity()const;
+    double getCurrentSOC()     const;
+    double getTargetSOC()      const;
+    int    getUrgency()        const;
 
-    double getBatteryCapacity();
-    double getCurrentSOC();
-    double getTargetSOC();
+ 
+    void setCurrentSOC(double soc);
+    void setTargetSOC(double soc);
 };
-
-#endif

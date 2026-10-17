@@ -1,21 +1,38 @@
-#ifndef USER_H
-#define USER_H
+#pragma once
 
-#include<string>
-using namespace std;
-class User
-{
+
+#include <string>
+
+class User {
 private:
     int userId;
-    string name;
-    string email;
+    std::string name;
+    std::string email;
+    std::string currentLocation;
+    std::string destination;
+
+    static int nextId;      
 
 public:
-    User(int id, string n, string e);
+    
+    User(const std::string& n, const std::string& e,
+         const std::string& loc = "", const std::string& dest = "");
 
-    int getUserId();
-    string getName();
-    string getEmail();
+   
+    User(int id, const std::string& n, const std::string& e,
+         const std::string& loc = "", const std::string& dest = "");
+
+   
+    int         getUserId()          const;
+    std::string getName()            const;
+    std::string getEmail()           const;
+    std::string getCurrentLocation() const;
+    std::string getDestination()     const;
+
+    void setCurrentLocation(const std::string& loc);
+    void setDestination(const std::string& dest);
+
+   
+    static bool isValidEmail(const std::string& email);
+    static int  getNextId();
 };
-
-#endif

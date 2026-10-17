@@ -1,33 +1,50 @@
-#ifndef STATION_H
-#define STATION_H
+#pragma once
+
 
 #include <string>
 #include <vector>
 #include "charger.h"
 
-using namespace std;
-
-class Station
-{
+class Station {
 private:
-    int stationId;
-    string name;
-    string location;
-    double availablePower;
+    int    stationId;
+    std::string name;
+    std::string location;       
+    double powerCapacity;      
+    double allocatedPower;      
 
-    vector<Charger> chargers;
+    std::vector<Charger> chargers;
+
+    static int nextId;
 
 public:
-    Station(int id, string n, string loc, double power);
+    Station(int id, const std::string& n, const std::string& loc,
+            double capacity);
 
-    int getStationId();
-    string getName();
-    string getLocation();
-    double getAvailablePower();
+   
+    int         getStationId()        const;
+    std::string getName()             const;
+    std::string getLocation()         const;
+    double      getPowerCapacity()    const;
+    double      getAllocatedPower()    const;
+    double      getAvailablePower()   const;  
+    int         getChargerCount()     const;
+    int         getAvailableChargerCount() const;
 
-    void addCharger(Charger charger);
+   
+    void     addCharger(const Charger& c);
+    std::vector<Charger>&       getChargers();
+    const std::vector<Charger>& getChargers() const;
+    Charger* findAvailableCharger();         
+    Charger* findChargerById(int id);
 
-    void displayChargers();
+
+    bool allocatePower(double amount);         
+    void releasePower(double amount);
+    void setPowerCapacity(double capacity);
+    void resetPowerAllocation();
+
+
+    void displayChargers() const;
+    void displayInfo()     const;
 };
-
-#endif

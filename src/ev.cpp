@@ -1,50 +1,23 @@
 #include "../include/ev.h"
 
-EV::EV(int id, int uid, string location, string dest,
-       double capacity, double soc, double target)
-{
-    evId = id;
-    userId = uid;
+int EV::nextId = 1;
 
-    currentLocation = location;
-    destination = dest;
+EV::EV(int uid, double capacity, double soc, double target, int urg)
+    : evId(nextId++), userId(uid), batteryCapacity(capacity),
+      currentSOC(soc), targetSOC(target), urgency(urg) {}
 
-    batteryCapacity = capacity;
-    currentSOC = soc;
-    targetSOC = target;
+EV::EV(int id, int uid, double capacity, double soc, double target, int urg)
+    : evId(id), userId(uid), batteryCapacity(capacity),
+      currentSOC(soc), targetSOC(target), urgency(urg) {
+    if (id >= nextId) nextId = id + 1;
 }
 
-int EV::getEvId()
-{
-    return evId;
-}
+int    EV::getEvId()            const { return evId; }
+int    EV::getUserId()          const { return userId; }
+double EV::getBatteryCapacity() const { return batteryCapacity; }
+double EV::getCurrentSOC()      const { return currentSOC; }
+double EV::getTargetSOC()       const { return targetSOC; }
+int    EV::getUrgency()         const { return urgency; }
 
-int EV::getUserId()
-{
-    return userId;
-}
-
-string EV::getCurrentLocation()
-{
-    return currentLocation;
-}
-
-string EV::getDestination()
-{
-    return destination;
-}
-
-double EV::getBatteryCapacity()
-{
-    return batteryCapacity;
-}
-
-double EV::getCurrentSOC()
-{
-    return currentSOC;
-}
-
-double EV::getTargetSOC()
-{
-    return targetSOC;
-}
+void EV::setCurrentSOC(double soc)  { currentSOC = soc; }
+void EV::setTargetSOC(double soc)   { targetSOC = soc; }

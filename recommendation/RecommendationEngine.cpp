@@ -4,8 +4,6 @@
 #include <algorithm>
 #include <cmath>
 
-// 1. Calculate score based on travel time.
-// Less travel time = higher score.
 double RecommendationEngine::calculateDistanceScore(
     double travelTime)
 {
@@ -15,8 +13,6 @@ double RecommendationEngine::calculateDistanceScore(
     return std::max(0.0, 100.0 - travelTime);
 }
 
-// 2. Calculate score based on waiting time.
-// Less waiting time = higher score.
 double RecommendationEngine::calculateWaitingScore(
     double waitingTime)
 {
@@ -26,16 +22,12 @@ double RecommendationEngine::calculateWaitingScore(
     return std::max(0.0, 100.0 - waitingTime);
 }
 
-// 3. Check charger availability.
 double RecommendationEngine::calculateAvailabilityScore(
     bool available)
 {
     return available ? 100.0 : 0.0;
 }
 
-// 4. Calculate score based on station load.
-// Lower load = higher score.
-// stationLoad is expected to be between 0 and 100.
 double RecommendationEngine::calculateLoadScore(
     double stationLoad)
 {
@@ -47,8 +39,6 @@ double RecommendationEngine::calculateLoadScore(
     return 100.0 - stationLoad;
 }
 
-// 5. Calculate score based on charging cost.
-// Lower cost = higher score.
 double RecommendationEngine::calculateCostScore(
     double chargingCost)
 {
@@ -58,9 +48,6 @@ double RecommendationEngine::calculateCostScore(
     return std::max(0.0, 100.0 - chargingCost);
 }
 
-// 6. Calculate urgency score.
-// Urgent EVs are penalized more for long delays,
-// so lower travel and waiting times are preferred.
 double RecommendationEngine::calculateUrgencyScore(
     double travelTime,
     double waitingTime,
@@ -79,7 +66,6 @@ double RecommendationEngine::calculateUrgencyScore(
     );
 }
 
-// Calculate the overall score for one station.
 StationRecommendation RecommendationEngine::calculateScore(
     const StationMetrics& station)
 {
@@ -112,7 +98,6 @@ StationRecommendation RecommendationEngine::calculateScore(
             station.urgencyLevel
         );
 
-    // Weighted total: all weights add up to 1.00 (100%).
     result.totalScore =
           result.distanceScore * 0.20
         + result.waitingScore * 0.20
@@ -124,7 +109,6 @@ StationRecommendation RecommendationEngine::calculateScore(
     return result;
 }
 
-// Rank stations from highest score to lowest score.
 std::vector<StationRecommendation>
 RecommendationEngine::rankStations(
     const std::vector<StationMetrics>& stations)
@@ -133,8 +117,6 @@ RecommendationEngine::rankStations(
 
     for (const StationMetrics& station : stations)
     {
-        // A station without an available charger
-        // is not eligible for recommendation.
         if (!station.chargerAvailable)
             continue;
 
@@ -149,8 +131,6 @@ RecommendationEngine::rankStations(
         {
             if (a.totalScore != b.totalScore)
                 return a.totalScore > b.totalScore;
-
-            // If scores tie, use station ID for consistency.
             return a.stationId < b.stationId;
         }
     );

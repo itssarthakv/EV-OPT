@@ -1,22 +1,21 @@
-
 #ifndef SORTING_H
 #define SORTING_H
 
-#include <vector>
-#include <string>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-struct SortStation
+typedef struct
 {
     int stationId;
-    std::string stationName;
+    char stationName[50];
     int distance;
-};
+} SortStation;
 
-class Sorting
-{
-public:
-    // Sorts stations from nearest to farthest
-    void sortByDistance(std::vector<SortStation>& stations);
-};
+void sortByDistance(SortStation stations[], int size);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

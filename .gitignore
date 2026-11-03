@@ -2,3 +2,5 @@
 # Compiled DSA test binaries
 Routing-DSA/Graph/graph_test
 Routing-DSA/Hashing/station_hash_test
+
+.DS_Store

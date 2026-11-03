@@ -1,21 +1,31 @@
 #ifndef GRAPH_H
 #define GRAPH_H
 
-#include <vector>
-#include <utility>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class Graph
+typedef struct EdgeNode
 {
-private:
-    int vertices;
-    int edges;
-    std::vector<std::vector<std::pair<int, int>>> adjacencyList;
+    int vertex;
+    int weight;
+    struct EdgeNode *next;
+} EdgeNode;
 
-public:
-    Graph(int vertices);
-    void addEdge(int source, int destination, int distance);
-    void displayGraph();
-    void dijkstra(int source);
-};
+typedef struct
+{
+    int vertices;
+    EdgeNode **adjacencyList;
+} Graph;
+
+int initializeGraph(Graph *graph, int vertices);
+int addEdge(Graph *graph, int src, int dest, int weight);
+void displayGraph(const Graph *graph);
+void dijkstra(const Graph *graph, int startVertex);
+void freeGraph(Graph *graph);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

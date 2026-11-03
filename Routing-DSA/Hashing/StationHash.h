@@ -1,17 +1,31 @@
 #ifndef STATION_HASH_H
 #define STATION_HASH_H
 
-#include <unordered_map>
-#include <string>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-class StationHash
+#define TABLE_SIZE 10
+
+typedef struct StationNode
 {
-private:
-    std::unordered_map<int, std::string> stations;
+    int stationId;
+    char stationName[50];
+    struct StationNode *next;
+} StationNode;
 
-public:
-    void addStation(int stationId, std::string stationName);
-    void findStation(int stationId);
-};
+typedef struct
+{
+    StationNode *buckets[TABLE_SIZE];
+} StationHash;
+
+void initializeHashTable(StationHash *table);
+int addStation(StationHash *table, int stationId, const char *stationName);
+const char *findStation(const StationHash *table, int stationId);
+void freeHashTable(StationHash *table);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif

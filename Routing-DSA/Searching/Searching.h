@@ -1,22 +1,21 @@
-
 #ifndef SEARCHING_H
 #define SEARCHING_H
 
-#include <vector>
-#include <string>
+#ifdef __cplusplus
+extern "C" {
+#endif
 
-struct Station
+typedef struct
 {
     int stationId;
-    std::string stationName;
+    char stationName[50];
     int distance;
-};
+} Station;
 
-class Searching
-{
-public:
-    // Finds a station by ID; returns its index or -1 if not found
-    int searchById(const std::vector<Station>& stations, int stationId);
-};
+int searchById(const Station stations[], int size, int stationId);
+
+#ifdef __cplusplus
+}
+#endif
 
 #endif
